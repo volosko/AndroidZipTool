@@ -1,9 +1,13 @@
 package com.avolosko.androidziptool;
 
+import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.io.File;
 
 
 public class StartActivity extends ActionBarActivity {
@@ -12,6 +16,7 @@ public class StartActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+        new CompressOperation().execute();
     }
 
 
@@ -33,4 +38,24 @@ public class StartActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    private class CompressOperation extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            File file = new File(Environment.getExternalStorageDirectory()+"/filename");
+            ZipTool.compress(file);
+
+
+            File folder = new File(Environment.getExternalStorageDirectory()+"/folder name");
+            ZipTool.compress(folder);
+
+
+            File media = new File(Environment.getExternalStorageDirectory()+"/filename");
+            ZipTool.compress(media);
+            return null;
+        }
+    }
+
 }
